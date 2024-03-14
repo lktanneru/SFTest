@@ -1,1 +1,1 @@
-ant $1 -Dsf.username=$2 -Dsf.password=$3 -Dsf.serverurl=$4
+ant $1 -Dsf.accesstoken=$2 -Dsf.serverurl=$3

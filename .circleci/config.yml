@@ -32,7 +32,7 @@ jobs:
           command: . build/antSetup.sh ./force-app
       - run:
           name: Deploy
-          command: . build/antDeploy.sh ${SFDC_USER}.hivedev $SFDC_DEV_PASSWORD $SFDC_SANDBOX_URL
+          command: . build/antDeploy.sh $ACCESSTOKEN $SFDC_SANDBOX_URL
  
   Delta deploy to DEV:
     executor: my-executor
@@ -69,119 +69,11 @@ jobs:
             if [ -d "deployChangeCode" ]
             then
               echo "in deployChangeCode"
-              . build/antCommonDeploy.sh deployDelta ${SFDC_USER}.hivedev $SFDC_DEV_PASSWORD $SFDC_SANDBOX_URL
-            else
-              echo "No changes in code"
-            fi
-  Full deployment to UAT:
-    executor: my-executor
-    steps:
-      - checkout
-
-      - persist_to_workspace:
-            root: ~/project
-            paths:
-              - .
-      - run:
-          name: Convert sfdx to mdapi
-          command: . build/antSetup.sh ./force-app
-      - run:
-          name: Deploy
-          command: . build/antDeploy.sh ${SFDC_USER}.uathive $SFDC_UAT_PASSWORD $SFDC_SANDBOX_URL
-  Delta deploy to UAT:
-    executor: my-executor
-    steps:
-      - checkout
-      - run:
-          name: get difference
-          command: . build/getDelta.sh
-      - run:
-          name: get test classes
-          command: . build/getTestClasses.sh
-      - persist_to_workspace:
-            root: ~/project
-            paths:
-              - .
-      - store_artifacts:
-          path: ./target
-          destination: DeltaCode/target/
-      - store_artifacts:
-          path: ./deployChangeCode/package.xml
-          destination: DeltaCode/target/package.xml
-      - store_artifacts:
-          path: ./delta.log
-          destination: ./Delta/delta.log
-      - store_artifacts:
-          path: ./release_notes.csv
-          destination: ./release_notes.csv
-      - store_artifacts:
-          path: ./build.xml
-          destination: ./build.xml
-      - run:
-          name: Deploy
-          command: |
-            if [ -d "deployChangeCode" ]; then
-              echo "in deployChangeCode"
-              . build/antCommonDeploy.sh deployDelta ${SFDC_USER}.uathive $SFDC_UAT_PASSWORD $SFDC_SANDBOX_URL
+              . build/antCommonDeploy.sh deployDelta $ACCESSTOKEN $SFDC_SANDBOX_URL
             else
               echo "No changes in code"
             fi
 
-  Full deployment to QA :
-    executor: my-executor
-    steps:
-      - checkout
-
-      - persist_to_workspace:
-            root: ~/project
-            paths:
-              - .
-      - run:
-          name: Convert sfdx to mdapi
-          command: . build/antSetup.sh ./force-app
-      - run:
-          name: Deploy
-          command: . build/antDeploy.sh ${SFDC_USER}.qahive $SFDC_QA_PASSWORD $SFDC_SANDBOX_URL
-  
-  Delta deploy to QA:
-    executor: my-executor
-    steps:
-      - checkout
-      - run:
-          name: get difference
-          command: . build/getDelta.sh
-      - run:
-          name: get test classes
-          command: . build/getTestClasses.sh
-      - persist_to_workspace:
-            root: ~/project
-            paths:
-              - .
-      - store_artifacts:
-          path: ./target
-          destination: DeltaCode/target/
-      - store_artifacts:
-          path: ./deployChangeCode/package.xml
-          destination: DeltaCode/target/package.xml
-      - store_artifacts:
-          path: ./delta.log
-          destination: ./Delta/delta.log
-      - store_artifacts:
-          path: ./release_notes.csv
-          destination: ./release_notes.csv
-      - store_artifacts:
-          path: ./build.xml
-          destination: ./build.xml
-      - run:
-          name: Deploy
-          command: |
-            if [ -d "deployChangeCode" ]; then
-              echo "in deployChangeCode"
-              . build/antCommonDeploy.sh deployDelta ${SFDC_USER}.qahive $SFDC_QA_PASSWORD $SFDC_SANDBOX_URL
-            else
-              echo "No changes in code"
-            fi
-   
   Save Commit RSA:
     executor: my-executor
     steps:
@@ -190,61 +82,6 @@ jobs:
       - run:
           name: Save Commit RSA
           command: . build/saveCommit.sh
-
-  delta deployment to PROD:
-    executor: my-executor
-    steps:
-      - checkout
-      - run:
-          name: get difference
-          command: . build/getDelta.sh
-      - run:
-          name: get test classes
-          command: . build/getTestClasses.sh
-      - store_artifacts:
-          path: ./target
-          destination: DeltaCode/target/
-      - store_artifacts:
-          path: ./deployChangeCode/package.xml
-          destination: DeltaCode/target/package.xml
-      - store_artifacts:
-          path: ./delta.log
-          destination: ./Delta/delta.log
-      - store_artifacts:
-          path: ./release_notes.csv
-          destination: ./release_notes.csv
-      - store_artifacts:
-          path: ./build.xml
-          destination: ./build.xml
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
-      - run:
-          name: Deploy
-          command: |
-            if [ -d "deployChangeCode" ]
-            then
-              echo "in deployChangeCode"
-              . build/antCommonDeploy.sh deployDelta $SFDC_USER.hive $SFDC_PROD_PASSWORD $SFDC_PROD_URL
-            else
-              echo "No changes in code"
-            fi
-  Full Deployment to PROD:
-    executor: my-executor
-    steps:
-      - checkout
-
-      - persist_to_workspace:
-            root: ~/project
-            paths:
-              - .
-      - run:
-          name: Convert sfdx to mdapi
-          command: . build/antSetup.sh ./force-app
-      - run:
-          name: Deploy
-          command: . build/antDeploy.sh $SFDC_USER.hive $SFDC_PROD_PASSWORD $SFDC_PROD_URL
 
 workflows:
   version: 2
@@ -255,28 +92,28 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - DEV
       - Static code analysis:
           requires:
             - Approval for delta deployment
           filters:
             branches:
               only:
-                - develop
+                - DEV
       - Delta deploy to DEV:
           requires:
             - Static code analysis
           filters:
             branches:
               only:
-                - develop
+                - DEV
       - Save Commit RSA:
           requires:
             - Delta deploy to DEV
           filters:
             branches:
               only:
-                - develop
+                - DEV
   DEV Full workflows:
     jobs:
       - Approval for full deployment:
@@ -284,157 +121,25 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - DEV
       - Static code analysis:
           requires:
             - Approval for full deployment
           filters:
             branches:
               only:
-                - develop
+                - DEV
       - Full deployment to DEV:
           requires:
             - Static code analysis
           filters:
             branches:
               only:
-                - develop
+                - DEV
       - Save Commit RSA:
           requires:
             - Full deployment to DEV
           filters:
             branches:
               only:
-                - develop
-  QA Full workflows:
-    jobs:
-      - Approval for full deployment:
-          type: approval
-          filters:
-            branches:
-              only:
-                - qa
-      - Full deployment to QA:
-          requires:
-            - Approval for full deployment
-          filters:
-            branches:
-              only:
-                - qa
-      - Save Commit RSA:
-          requires:
-           - Full deployment to QA
-          filters:
-            branches:
-              only:
-                - qa
-  QA Delta workflows:
-    jobs:
-      - Approval for delta deployment:
-          type: approval
-          filters:
-            branches:
-              only:
-                - qa
-      - Delta deploy to QA:
-          requires:
-            - Approval for delta deployment
-          filters:
-            branches:
-              only:
-                - qa
-      - Save Commit RSA:
-          requires:
-            - Delta deploy to QA
-          filters:
-            branches:
-              only:
-                - uat
-  UAT Full workflows:
-    jobs:
-      - Approval for full deployment:
-          type: approval
-          filters:
-            branches:
-              only:
-                - uat
-      - Full deployment to UAT:
-          requires:
-            - Approval for full deployment
-          filters:
-            branches:
-              only:
-                - uat
-      - Save Commit RSA:
-          requires:
-           - Full deployment to UAT
-          filters:
-            branches:
-              only:
-                - uat
-  UAT Delta workflows:
-    jobs:
-      - Approval for delta deployment:
-          type: approval
-          filters:
-            branches:
-              only:
-                - uat
-      - Delta deploy to UAT:
-          requires:
-            - Approval for delta deployment
-          filters:
-            branches:
-              only:
-                - uat
-      - Save Commit RSA:
-          requires:
-            - Delta deploy to UAT
-          filters:
-            branches:
-              only:
-                - uat
-  PROD Delta Wokflow:
-    jobs:
-      - PROD Approval for incremental:
-          type: approval
-          filters:
-            branches:
-              only:
-                - release
-      - delta deployment to PROD:
-          requires:
-            - PROD Approval for incremental
-          filters:
-            branches:
-              only:
-                - release
-      - Save Commit RSA:
-          requires:
-            - delta deployment to PROD
-          filters:
-            branches:
-              only:
-                - release
-  PROD Full Wokflow:
-    jobs:
-      - PROD Approval for Full:
-          type: approval
-          filters:
-            branches:
-              only:
-                - release
-      - Full Deployment to PROD:
-          requires:
-            - PROD Approval for Full
-          filters:
-            branches:
-              only:
-                - release
-      - Save Commit RSA:
-          requires:
-            - Full Deployment to PROD
-          filters:
-            branches:
-              only:
-                - release
+                - DEV

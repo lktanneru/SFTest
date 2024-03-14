@@ -19,7 +19,7 @@
   
 
 	  <target name="deployUnpackaged">
-      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="./deployCode" rollbackOnError="true" testLevel="RunLocalTests"/>
+      <sf:deploy username="${sf.accesstoken}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="./deployCode" rollbackOnError="true" testLevel="RunLocalTests"/>
     </target>
     
       <!-- Shows check only; never actually saves to the server -->
@@ -57,7 +57,7 @@
 	  <sf:deployRecentValidation  username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" recentValidationId="${sf.recentValidationId}"/>
 	</target>
   <target name="deployDelta">
-      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="./deployChangeCode" rollbackOnError="true" testLevel="${sf.testLevel}" />
+      <sf:deploy username="${sf.accesstoken}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="./deployChangeCode" rollbackOnError="true" testLevel="${sf.testLevel}" />
   </target>
 
     <target name="retrieveUnpackaged">

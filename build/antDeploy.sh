@@ -1,2 +1,2 @@
 echo "Deploying to Dev Sandbox & running all tests..."
-ant deployUnpackaged -Dsf.username=$1 -Dsf.password=$2 -Dsf.serverurl=$3
+ant deployUnpackaged -Dsf.accesstoken=$1 -Dsf.serverurl=$2
