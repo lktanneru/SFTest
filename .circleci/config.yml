@@ -32,7 +32,7 @@ jobs:
           command: . build/antSetup.sh ./force-app
       - run:
           name: Deploy
-          command: . build/antDeploy.sh $SFDC_SANDBOX_URL
+          command: . build/antDeploy.sh $SFDC_USER $SFDC_DEV_PASSWORD $SFDC_SANDBOX_URL
  
   Delta deploy to DEV:
     executor: my-executor
@@ -69,7 +69,7 @@ jobs:
             if [ -d "deployChangeCode" ]
             then
               echo "in deployChangeCode"
-              . build/antCommonDeploy.sh deployDelta $ACCESSTOKEN $SFDC_SANDBOX_URL
+              . build/antCommonDeploy.sh deployDelta $SFDC_USER $SFDC_DEV_PASSWORD $SFDC_SANDBOX_URL
             else
               echo "No changes in code"
             fi
@@ -93,9 +93,16 @@ workflows:
             branches:
               only:
                 - DEV
-      - Delta deploy to DEV:
+      - Static code analysis:
           requires:
             - Approval for delta deployment
+          filters:
+            branches:
+              only:
+                - DEV
+      - Delta deploy to DEV:
+          requires:
+            - Static code analysis
           filters:
             branches:
               only:
@@ -115,9 +122,16 @@ workflows:
             branches:
               only:
                 - DEV
-      - Full deployment to DEV:
+      - Static code analysis:
           requires:
             - Approval for full deployment
+          filters:
+            branches:
+              only:
+                - DEV
+      - Full deployment to DEV:
+          requires:
+            - Static code analysis
           filters:
             branches:
               only:
