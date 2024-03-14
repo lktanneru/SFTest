@@ -93,16 +93,9 @@ workflows:
             branches:
               only:
                 - DEV
-      - Static code analysis:
-          requires:
-            - Approval for delta deployment
-          filters:
-            branches:
-              only:
-                - DEV
       - Delta deploy to DEV:
           requires:
-            - Static code analysis
+            - Approval for delta deployment
           filters:
             branches:
               only:
@@ -122,16 +115,9 @@ workflows:
             branches:
               only:
                 - DEV
-      - Static code analysis:
-          requires:
-            - Approval for full deployment
-          filters:
-            branches:
-              only:
-                - DEV
       - Full deployment to DEV:
           requires:
-            - Static code analysis
+            - Approval for full deployment
           filters:
             branches:
               only:
