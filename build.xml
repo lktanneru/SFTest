@@ -19,7 +19,11 @@
   
 
 	  <target name="deployUnpackaged">
-      <sf:deploy username="${sf.accesstoken}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="./deployCode" rollbackOnError="true" testLevel="RunLocalTests"/>
+      <sf:deploy serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="./deployCode" rollbackOnError="true" testLevel="RunLocalTests">
+        <credentials>
+            <accessToken>00D8Y000000PGi5!ARcAQA7WI1BChyFAidm0ca60PwPRN_C29tnGYtIXpuhdvraSYiGhqGM6iV1A9z2aQ3E785qApvMXT5BA3SPDPDC6FXSm2rjQ</accessToken>
+        </credentials>
+     </sf:deploy>
     </target>
     
       <!-- Shows check only; never actually saves to the server -->

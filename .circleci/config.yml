@@ -32,7 +32,7 @@ jobs:
           command: . build/antSetup.sh ./force-app
       - run:
           name: Deploy
-          command: . build/antDeploy.sh $ACCESSTOKEN $SFDC_SANDBOX_URL
+          command: . build/antDeploy.sh $SFDC_SANDBOX_URL
  
   Delta deploy to DEV:
     executor: my-executor
