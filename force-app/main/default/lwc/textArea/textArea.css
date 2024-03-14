@@ -1,0 +1,12 @@
+.fullwidth{
+    width: 100%;
+}
+
+.custom-modal-container {
+    width: 100%;
+}
+
+.custom-modal-content {
+    width: 100%;
+    box-sizing: border-box;
+}

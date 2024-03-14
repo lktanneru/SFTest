@@ -1,0 +1,70 @@
+<template>
+    <lightning-card title="" style="margin-left:40%">
+        <c-offline-banner></c-offline-banner>
+                <!-- <br /> -->
+                <!-- <template if:true={TypeOptions}>
+                    <lightning-combobox name="Entity" label="Entity" value={selectedEntityName} options={TypeOptions}
+                        variant="label-inline" onchange={handleChange}>
+                    </lightning-combobox>
+                </template> -->
+
+
+        <div class="slds-align_absolute-center slds-m-bottom_large">
+            <h1 style="font-size:large;"><strong>{entityName} Homepage</strong></h1>
+        </div>
+                
+
+        <div class="slds-grid slds-gutters">
+                    
+            <div class="slds-col slds-m-left_xxx-large">
+                    
+                <button style="margin-left:8%; width: 280px; height:40px;color:blue" variant="brand" class="slds-button_stretch slds-size_6-of-12 slds-m-right_xxx-small" label=" View Consolidated Implementation Plan"
+                        onclick={navigateToConsolidatedImpPlan}>View Consolidated Implementation Plan</button><br/><br/><br/><br/>
+
+                <button style="margin-left:8%; width: 280px; height:40px;color:green" variant="success" class="slds-m-left_xxx-small" label="Draft And Submit New Plans And Reports"
+                        onclick={navigateToPlansAndReportsPage}>Draft And Submit New Plans And Reports</button><br/><br/><br/><br/>
+
+                <button style="margin-left:8%; width: 280px; height:40px;color:red" variant="destructive" class="slds-button_stretch slds-size_12-of-12 slds-m-around_xxx-small" label="View Previous Plans And Reports"
+                        onclick={navigateToPrevSubmission}>View Previous Plans And Reports</button>
+
+            </div>
+
+            <div class="slds-col slds-m-right_xxx-large" style="margin-right:15%">
+                <p style="color:blue">View the Country or region's Consolidated Implementation Plan,<br/> which includes all tasks,
+                            from all years</p><br/><br/><br/>
+                <p style="color:green">Draft and submit an Annual Implementation Plan<br/>
+                   Draft and submit a 6 Month Progress Report<br/>
+                   Draft and submit an Annual Report        </p><br/><br/>
+                <p style="color:red">View and download Annual Implementation Plans submitted in previous years<br/>
+                   View 6 Month Progress Reports submitted in previous years<br/>
+                   View Annual Reports submitted in previous years
+                </p>
+            </div>
+
+            <div class="slds-col" style="margin-right:2%; margin-bottom:2%">
+                <p>Executive Affiliate:<br/> <lightning-badge label={countryName} class="slds-badge_inverse">
+                        </lightning-badge></p>
+                        
+                         <br/>
+                <p>Partner Affiliate(s):
+                        </p> 
+                            <table>
+                                <tr>
+                                    <template for:each={countryPAName} for:item="item">
+                                        <td key={item.Name}>
+                                            <lightning-badge label={item.Name} class="slds-badge_inverse">
+                                                </lightning-badge>
+                                        </td>
+                                    </template>
+                                </tr>
+                            </table>
+                            <br />
+                            <h1>Implementation Plan Due Date On      <b>April {currentYear}</b> </h1>
+                            <br />
+                            <h1>6 Months Progress Report Due Date On <b>October {currentYear}</b> </h1>
+                            <br />
+                            <h1>Annual Report Due Date On            <b> March {nextYear}</b> </h1>
+            </div>     
+        </div>
+    </lightning-card>
+</template>

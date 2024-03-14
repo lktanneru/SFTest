@@ -1,0 +1,31 @@
+.ul {
+    background-color: lightgreen;
+}
+
+.my-brand {
+    --sds-c-button-brand-color-background: rgb(144, 211, 238);
+}
+
+.iconColor {
+    --sds-c-icon-add-color-background: red;
+}
+.tab-active {
+    --sds-c-tabs-scoped-color-text-active: green;
+}
+
+.CoreStdWidth { 
+    font-size : 14px;
+    width : 220px;
+}
+
+.QuestionWidth{
+    font-size : 14px;
+    width : 580px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.BoxLinkWidth{
+    font-size : 14px;
+}

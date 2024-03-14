@@ -1,0 +1,18 @@
+<aura:component implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" controller="countryPageCls" access="global" >
+     <aura:attribute name="id" type="Id" />
+    <aura:attribute name="tabType" type="String" />
+    <c:submissionComponent ontabChange="{!c.handleTabChange}"></c:submissionComponent>
+    <aura:handler name="change" value="{!v.id}" action="{!c.itemsChange}"/>
+    
+	<!--<forceChatter:feed type="Record" subjectId="a0B8c000011x8ozEAA" />-->
+    
+    <aura:if isTrue="{!v.tabType == 'Core'}">
+    <lightning:card title="">
+        <p class="slds-p-left_large"> You must tag or @mention other users if you want them to be notified of your comment. If you do not tag or @mention other users, the comment will appear in Hive but other users will not be notified that you’ve made a comment</p>
+    
+    <div aura:id="feedContainer" class="feed-container">
+        <forceChatter:feed />
+    </div>
+    </lightning:card>   
+    </aura:if>
+</aura:component>

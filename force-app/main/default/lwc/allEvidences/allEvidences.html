@@ -1,0 +1,12 @@
+<template>
+    <lightning-datatable
+                key-field="Id"
+                data={evidenceData}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+                sorted-by={sortBy} 
+                sorted-direction={sortDirection} 
+                onsort={doSorting}>
+    </lightning-datatable>
+</template>

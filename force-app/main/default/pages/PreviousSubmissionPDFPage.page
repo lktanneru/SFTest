@@ -1,0 +1,261 @@
+<apex:page controller="PrevSubmissionPdfController" renderAs="pdf" applyHtmlTag="false" applyBodyTag="false" showHeader="false">
+    <head>
+        <style>
+            @page{ 
+                size: A4 landscape;
+
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                
+            }
+                td {
+                    vertical-align: top; /* Align text at the top */
+                }
+        </style>
+    </head>
+
+    <apex:form >
+        <apex:repeat value="{!OSList}" var="a" >
+            <h1 style="text-align:center; color:blue"> Plan/Report  "{!a.Name}"</h1>                  
+        </apex:repeat>
+        
+        <apex:pageBlock title="Person Who Submitted This Plan/Report">
+            
+            <table border="0.001px">
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                </tr>                    
+                <apex:repeat value="{!OSList}" var="a" >
+                    <tr>
+                        <td>{!a.Name__c}</td>                       
+                        <td>{!a.Role__c}</td>
+                        <td>{!a.Email__c}</td>                                           
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+        <apex:pageBlock title="Safeguarding Focal Points">
+            <table border="0.001">
+                <tr>
+                    <th>Name</th>
+                    <th>Office/Sub Office</th>
+                </tr>                    
+                <apex:repeat value="{!focalPoints}" var="a" >
+                    <tr>
+                        <td>{!a.Name}</td>                       
+                        <td>{!a.Office_Sub_Office__c}</td>
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+        <apex:pageBlock title="Information Providers">
+            <table border="0.001">
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Type Of Info</th>
+                </tr>                    
+                <apex:repeat value="{!informationList}" var="a" >
+                    <tr>
+                        <td>{!a.Name}</td>                       
+                        <td>{!a.Role__c}</td>
+                        <td>{!a.Type_Of_Information__c}</td>     
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+     
+        <apex:pageBlock title="Tasks">
+            
+            <table border="0.001px">
+                <tr>
+                    <th>Task Reference</th>
+                    <th>Key Task</th>
+                    <th>Person Responsible</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Comments/Updates</th>
+                    <th>Completion Date</th>
+                </tr>                    
+                <apex:repeat value="{!TaskList}" var="a" >
+                    <tr>
+                        <td>{!a.Name}</td>                       
+                        <td>{!a.Key_Task__c}</td>
+                        <td>{!a.Person_Responsible_For_The_Activity__c}</td>                       
+                        <td> 
+                            <apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Due_Date__c}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>{!a.Status__c}</td>                       
+                        <td>{!a.Comments__c}</td>
+                        <td>
+                            <apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Completion_Date__c}"/>
+                            </apex:outputText>
+                        </td>                       
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+        
+      <apex:outputPanel rendered="{!ImpFlag}">  
+        <apex:pageBlock title="Question And Answers">
+            <table border="0.001">
+                <tr>
+                    <th>CS #</th>
+                    <th>Que #</th>
+                    <th>Question</th>
+                    <th>Ans</th>
+                    <th>Descriptive Answer</th>
+                </tr>                    
+                <apex:repeat value="{!qaList}" var="a" >
+                    <tr>
+                        <td>{!a.Core_Standard_Entity__r.Core_Standard__r.Core_Standard_Number__c}</td>                       
+                        <td>{!a.Question__r.Question_Number__c}</td>
+                        <td>{!a.Question__r.Question__c}</td> 
+                        <td>{!a.Answer__c}</td>
+                        <td>{!a.Descriptive_Answer__c}</td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Safeguarding Training Table (CS5)">
+            <table border="0.001">
+                <tr>
+                    <th>Date Of Training</th>
+                    <th>Description Of Training</th>
+                    <th>Who Delivered Training?</th>
+                    <th>Did The Training Cover Safeguarding Policy?</th>
+                    <th>Did The Training Cover PSEA Policy?</th>
+                    <th>Did The Training Cover Code Of Conduct?</th>
+                    <th>Number Of Oxfam Staff</th>
+                    <th>Number Of Partners</th>
+                    <th>Number of Community</th>
+                    <th>Total Trained</th>
+                    <th>Attendance Sheet</th>
+                    <th>Training Materials</th>
+                    <th>Other Evidence</th>
+                </tr>                    
+                <apex:repeat value="{!trainList}" var="a" >
+                    <tr>
+                        <td>{!a.Name}</td>                       
+                        <td>{!a.Description_Of_Training__c}</td>
+                        <td>{!a.Who_Delivered_the_Training__c}</td>
+                        <td>{!a.Safeguarding_Policy__c}</td>
+                        <td>{!a.PSEA_Policy__c}</td>
+                        <td>{!a.Code_of_Conduct__c}</td>
+                        <td>{!a.Number_of_Oxfam_staff__c}</td>
+                        <td>{!a.Number_of_partners__c}</td>
+                        <td>{!a.Number_of_community__c}</td>
+                        <td>{!a.Total_Trained_Staff__c}</td>
+                        <td>{!a.Attendance_Sheet__c}</td>
+                        <td>{!a.Training_materials__c}</td>
+                        <td>{!a.Other_evidence__c}</td>
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+        <apex:pageBlock title="Partner Table (CS8)">
+            <table border="0.001">
+                <tr>
+                    <th>Partner Name</th>
+                    <th>Project(s) Partner is Involved in</th>
+                    <th>Partner since</th>
+                    <th>Contact or Working with Children</th>
+                    <th>CS and PSEA in Partner Capacity Assessment</th>
+                    <th>CS and PSEA in Partner Working Agreement</th>
+                    <th>Partner Code Of Conduct Or Equivalent Signed? </th>
+                    <th>CS and PSEA Policy In Place</th>
+                    <th>Date of the last CS training</th>
+                    <th>Date of the last PSEA training</th>
+                </tr>                    
+                <apex:repeat value="{!partnerList}" var="a" >
+                    <tr>
+                        <td>{!a.Name}</td>                       
+                        <td>{!a.Project_s_Partner_is_Involved_in__c}</td>
+                        <td>{!a.Partner_since__c}</td>  
+                        <td>{!a.Contact_or_Working_with_Children__c}</td>
+                        <td>{!a.CS_PSEA_in_Partner_Capacity_Assessment__c}</td>
+                        <td>{!a.CS_PSEA_in_Partner_Working_Agreement__c}</td>
+                        <td>{!a.PartnerCodeofConductorequivalentSigned__c}</td>
+                        <td>{!a.CS_and_PSEA_Policy_in_Place__c}</td>
+                        <td>
+                            <apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Date_of_the_last_CS_training__c}"/>
+                            </apex:outputText>
+                        </td>
+                        <td><apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Date_of_the_last_PSEA_training__c}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                
+            </table>
+        </apex:pageBlock>
+        <apex:pageBlock title="Project Risk Assessment Table (CS9)">
+            <table border="0.001">
+                <tr>
+                    <th>Project Name</th>
+                    <th>Project start date</th>
+                    <th>Project End date</th>
+                    <th>What level of contact with children do the project activities involve?</th>
+                    <th>Is the Risk Assessment completed</th>
+                    <th>Were the partners involved in Risk Assessment?</th>
+                    <th>When was the last review/update of Risk Assessment?</th>
+                    <th>What progress has been made on monitoring High Risk Activities in the Risk Assessment since the last report?</th>
+                    <th>If no Risk Assessment has been completed, please provide an explanation</th>
+                </tr>                    
+                <apex:repeat value="{!projectList}" var="a" >
+                    <tr>
+                        <td>{!a.Name}</td>                       
+                        <td><apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Project_Start_Date__c}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>{!a.Project_End_Date__c}</td>
+                        <td><apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Project_End_Date__c}"/>
+                            </apex:outputText>
+                        </td>
+                        <td>{!a.Is_the_Risk_Assessment_completed__c}</td>
+                        <td>{!a.partners_involved_in_Risk_Asses__c}</td>
+                        <td>{!a.When_was_the_last_review_update_of_Risk__c}</td>
+                        <td>{!a.Progress_On_Monitoring_High_Risk__c}</td>
+                        <td>{!a.If_No_Risk_Assessment_Explain__c}</td>
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Summary">
+            <table border="0.001">
+                <tr>
+                    <th>Achievements</th>
+                    <th>Challanges</th>
+                    <th>Support Needed?</th>
+                </tr>                    
+                <apex:repeat value="{!summaryList}" var="a" >
+                    <tr>
+                        <td>{!a.Summary_Achievements__c}</td>
+                        <td >{!a.Sumamry_Challanges__c}</td>
+                        <td >{!a.Summary_Support_Needed__c}</td>
+                    </tr>
+                    
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+     </apex:outputPanel>
+    </apex:form>         
+</apex:page>

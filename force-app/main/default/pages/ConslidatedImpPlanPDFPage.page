@@ -1,0 +1,58 @@
+<apex:page controller="ConsolidatedImpPlanPDFController" renderAs="pdf" applyHtmlTag="false" applyBodyTag="false" showHeader="false">
+    <head>
+        <style>
+            @page{ 
+                size: A4 landscape;
+
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                
+            }
+                .page-break {
+                display:block;
+                page-break-after:always;
+                }
+                td {
+                    vertical-align: top; /* Align text at the top */
+                }
+        </style>
+    </head>
+    <apex:form >
+        <apex:pageBlock title="Consolidated Implementation Plan">
+            <table border="0.001px">
+                   <tr>
+                       <th>Task Reference</th>
+                       <th>Reporting Period</th>
+                       <th>Core Standard</th>
+                       <th>Key Task</th>
+                       <th>Due Date</th>
+                       <th>Person Responsible</th>
+                       <th>Status</th>
+                       <th>Comments/Updates</th>
+                       <th>Completion Date</th>
+                    </tr>                    
+               <apex:repeat value="{!TaskList}" var="a" >
+                  <tr>
+                       <td>{!a.Name}</td>
+                       <td> {!a.Reporting_Period__r.name}</td>
+                       <td> {!a.Core_Standard_Entity__r.Core_Standard__r.Name}</td>
+                       <td>{!a.Key_Task__c}</td>
+                       <td><apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Due_Date__c}"/>
+                            </apex:outputText>
+                        </td>
+                       <td>{!a.Person_Responsible_For_The_Activity__c}</td>                       
+                       <td>{!a.Status__c}</td>                       
+                       <td>{!a.Comments__c}</td>
+                       <td>
+                            <apex:outputText value="{0,date,yyyy/dd/MM}">
+                                <apex:param value="{!a.Completion_Date__c}"/>
+                            </apex:outputText>
+                       </td>                       
+                  </tr>
+                </apex:repeat>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

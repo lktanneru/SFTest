@@ -1,0 +1,8 @@
+<template>
+
+    <template if:true={getSubmissionType}>
+        <lightning-combobox class="slds-size_small" name="Submission Type" label="Submission Type"
+            onchange={addselectedValue} options={getSubmissionType} value={selectedsubtype}  required>
+        </lightning-combobox>
+    </template>
+</template>

@@ -1,0 +1,6 @@
+:host {
+    /*background-color: #ffcccc;  Light red background */
+    color: #ff0000; /* Red text color */
+    padding: 10px;
+    text-align: center;
+}

@@ -1,0 +1,3 @@
+.forceSearchAssistant .search-button, .forceSearchAssistant .search-button:hover, .forceSearchAssistant .search-button:focus{
+    display:none;
+}

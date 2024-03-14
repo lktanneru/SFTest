@@ -1,0 +1,86 @@
+.sticky-footer{
+  position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.sticky-footer lightning-button {
+  pointer-events: auto;
+}
+
+.UploadFiles{
+    box-align: absolute-center;  
+    border-color: lightgreen; 
+    margin: 4px;
+  }
+  
+  /* for Que number and question */
+.question {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.asterisk{
+  color: red;
+  display: inline;
+  margin-left: 1px; /* Adjust the spacing as needed */
+}
+
+/* for training table */
+.custom-table-training {
+  table-layout: fixed;
+  width: max-content;
+  border-collapse: collapse;
+}
+/* for partner and project table */
+.custom-table{
+  width: 100%;
+  /* border-collapse: collapse; */
+}
+/* for partner and project table */
+.header-cell {
+  white-space: normal;
+  word-wrap: break-word;
+}
+/* for partner and project table */
+.body-cell {
+  min-width: 120px; /* Adjust the minimum width as needed */
+  flex-grow: 1;
+}
+
+.trainrow > td{
+  padding: 5px;
+}
+
+.cell {
+  padding-top: 0;
+
+}
+
+.flex-container{
+  display: flex;
+  gap: 10px;
+}
+
+.heading-center{
+  text-align: center;
+  padding:0px;
+}
+
+.picklist-container {
+  position:relative;
+  z-index: 9999;
+}
+
+.boxAlign{
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.custom-input {
+  width: 100% !important; 
+}
+

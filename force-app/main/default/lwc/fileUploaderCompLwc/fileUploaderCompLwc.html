@@ -1,0 +1,25 @@
+<template>
+  
+    <c-spinner is-loading={isLoading}></c-spinner>
+<!-- Label tag and div tags used to override the standard upload files label class="slds-m-top_medium " -->
+<template if:false= {target}>
+    <div class="slds-m-left_x-large">
+        <input 
+            type="file" class="custom-file-input"
+            accept=".xlsx, .xls, .ppt , .pptx, .csv, .png, .doc, .docx, .pdf, .msg , .eml, .jpeg , .jpg"
+            onchange={openfileUpload}/>
+        <!-- </input> -->
+    </div>
+
+</template>
+<template if:true= {target}>
+    <div>
+        <input 
+            type="file" class="custom-file-input"
+            accept=".xlsx, .xls, .ppt , .pptx, .csv, .png, .doc, .docx, .pdf, .msg , .eml, .jpeg , .jpg"
+            onchange={openfileUpload}/>
+        <!-- </input> -->
+    </div>
+</template>
+
+</template>

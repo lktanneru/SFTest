@@ -1,0 +1,85 @@
+<template>
+    <c-spinner is-loading = {isLoading}></c-spinner>
+    <lightning-card title="" class="cardSpinner">
+        <c-offline-banner></c-offline-banner>
+                    <lightning-layout>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-combobox name="filerBy" value={filterBy} label="Search By" options={filterByOption}
+                                onchange={handleSearchBy}></lightning-combobox>
+            
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" padding="around-small">
+                            <lightning-input label="Search" type="search" placeholder="Search here in lower case"
+                                onchange={handleSearch}></lightning-input>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="2" padding="around-small">
+                            <div class="slds-m-bottom_medium" style="margin-top: 12%; margin-left:90%">
+                                <lightning-badge label={loadedFrmHomeEntityName} class="slds-badge_inverse">
+                                </lightning-badge>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <div class="slds-m-bottom_medium" style="margin-top: 12%; margin-left:90%">
+                                <lightning-button-icon
+                                    icon-name="utility:refresh"
+                                    size="small"
+                                    onclick={handleRefreshClick}
+                                    alternative-text="Refresh"
+                                    title="Get latest task(s)"
+                                ></lightning-button-icon>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                   
+        
+        <br />
+        <!-- <div if:false={isLoaded} class="slds-is-relative">
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div> -->
+     
+        <div style="width: auto;"
+            class="slds-m-around_medium slds-table_striped slds-table_col-bordered slds-table_edit_container slds-is-relative slds-no-row-hover slds-scrollable_x">
+            <template if:true={data}>
+                <c-custom-type-global 
+                    data={data} 
+                    columns={columns} 
+                    key-field="Id" 
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection} 
+                    onsort={doSorting} 
+                    onsave={saveHandleAction} 
+                    draft-values={fldsItemValues}  
+                    oncellchange={handleCellChange} 
+                    oncancel={handleCancel} 
+                    hide-checkbox-column="true"
+                    show-row-number-column
+                    onpicklistchanged={picklistChanged}
+                    ontextchanged={handleCellValueChange}
+                    >
+                </c-custom-type-global>
+            </template>
+        </div>
+   
+<!-- Buttons -->
+        <div class="slds-p-around_medium align_center slds-align_absolute-center">
+            <lightning-button-group>
+                <div class="slds-p-around_small">
+                    <lightning-button class="slds-m-right_xxx-small" label="Back" onclick={handleBackButton}>
+                    </lightning-button>
+                    <lightning-button class="slds-m-right_xxx-small" label="Download CSV" onclick={handleCSVGenerator}>
+                    </lightning-button>
+                    <lightning-button class="slds-m-left_xxx-small" label="Generate PDF" onclick={generatePDFHandler}>
+                    </lightning-button>
+                </div>
+            </lightning-button-group>
+        </div>
+
+        <div class="slds-box slds-m-around_medium" style="color:red; background-color:aliceblue">
+    <lightning-formatted-rich-text value={consolidateImpPlanMesssage}></lightning-formatted-rich-text>
+        </div>
+    </lightning-card>
+</template>
